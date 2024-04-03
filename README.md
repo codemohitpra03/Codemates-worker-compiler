@@ -15,7 +15,7 @@ The Worker Service manages code by being a *consumer* for *message queue*.
 
 **Technologies Used:**
 - Backend: Node.js, Express.js, Kafka
-- Languages: C++, Java, JavaScript, Python
+- Languages supported: C++, Java, JavaScript, Python
 
 
 
