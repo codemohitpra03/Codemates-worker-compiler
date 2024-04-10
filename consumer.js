@@ -1,5 +1,5 @@
 const {Kafka} = require('kafkajs')
-
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -16,7 +16,7 @@ async function run(){
     try {
         const kafka = new Kafka({
             "clientId":"codemates",
-            "brokers":["192.168.10.7:9092"]
+            "brokers":[`${process.env.kafkaip}:9092`]
         })
 
         const consumer = kafka.consumer({"groupId":"test"})
@@ -83,10 +83,10 @@ function eventsHandler(request, response, next) {
     clients[clientId] = response
     // console.log(clients);
     
-    request.on('close', () => {
-        console.log(`${clients} Connection closed`);
-        client = null;
-    });
+    // request.on('close', () => {
+    //     console.log(`${clients} Connection closed`);
+    //     client = null;
+    // });
 }
 
 // ...
@@ -122,8 +122,9 @@ async function sendCode(payload) {
         await write_to_file('js',code)
         result = await executeNodejsCode()
     }
+
     console.log(result,"exec code");
-    clients[socketId].write(`data: ${JSON.stringify(result + " milgay code")}\n\n`)
+    await clients[socketId].write(`data: ${JSON.stringify(result)}\n\n`)
 }
 
 async function compileCode(request, response, next) {

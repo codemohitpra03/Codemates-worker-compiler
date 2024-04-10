@@ -1,3 +1,2 @@
-for i in range(0,3):
-    print("pm python")
-
+while True:
+  print("pm")

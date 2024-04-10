@@ -1,10 +1,12 @@
+require('dotenv').config()
 const {Kafka} = require('kafkajs')
 
 async function run(){
     try {
+        console.log(process.env);
         const kafka = new Kafka({
             "clientId":"codemates",
-            "brokers":["192.168.10.7:9092"]
+            "brokers":[`${process.env.kafkaip}:9092`]
         })
 
         const admin = kafka.admin()
